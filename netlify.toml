@@ -1,0 +1,108 @@
+# =============================================================================
+# IQ Homes — Netlify configuration
+#
+# You don't need to touch this file. Netlify reads it automatically when you
+# deploy. It sets security headers, tells browsers how long to cache things,
+# and makes /services work as well as /services.html.
+# =============================================================================
+
+[build]
+  # The site is plain HTML — nothing to compile. Publish the folder as-is.
+  publish = "."
+  command = ""
+
+# -----------------------------------------------------------------------------
+# Security headers — applied to every page
+# -----------------------------------------------------------------------------
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "SAMEORIGIN"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "geolocation=(), microphone=(), camera=(), interest-cohort=()"
+    # HTML itself must never be cached hard, or visitors get a stale site
+    # after you redeploy.
+    Cache-Control = "public, max-age=0, must-revalidate"
+
+# -----------------------------------------------------------------------------
+# Caching — the 3D engine never changes, so cache it for a year
+# -----------------------------------------------------------------------------
+[[headers]]
+  for = "/assets/js/vendor/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/assets/css/*"
+  [headers.values]
+    Cache-Control = "public, max-age=604800"
+
+[[headers]]
+  for = "/assets/js/*"
+  [headers.values]
+    Cache-Control = "public, max-age=604800"
+
+[[headers]]
+  for = "/assets/img/*"
+  [headers.values]
+    Cache-Control = "public, max-age=2592000"
+
+# -----------------------------------------------------------------------------
+# Clean URLs — /blinds works as well as /blinds.html
+# -----------------------------------------------------------------------------
+[[redirects]]
+  from = "/services"
+  to = "/services.html"
+  status = 301
+
+[[redirects]]
+  from = "/blinds"
+  to = "/blinds.html"
+  status = 301
+
+[[redirects]]
+  from = "/gallery"
+  to = "/gallery.html"
+  status = 301
+
+[[redirects]]
+  from = "/about"
+  to = "/about.html"
+  status = 301
+
+[[redirects]]
+  from = "/service-area"
+  to = "/service-area.html"
+  status = 301
+
+[[redirects]]
+  from = "/areas"
+  to = "/service-area.html"
+  status = 301
+
+[[redirects]]
+  from = "/faq"
+  to = "/faq.html"
+  status = 301
+
+[[redirects]]
+  from = "/contact"
+  to = "/contact.html"
+  status = 301
+
+# Short links that are easier to say out loud or print on a van
+[[redirects]]
+  from = "/book"
+  to = "/contact.html"
+  status = 301
+
+[[redirects]]
+  from = "/quote"
+  to = "/contact.html"
+  status = 301
+
+[[redirects]]
+  from = "/index.html"
+  to = "/"
+  status = 301
